@@ -5,7 +5,7 @@ public class Item : Distance
 {
     public enum ItemsPlayer { Bat, Pistol, Battery }
     public ItemsPlayer itemsPlayer;
-    public int numItem;
+    public int numItem, setItemNum;
     public bool isDeavtivated;
     public PhotonView pv;
 
@@ -23,7 +23,8 @@ public class Item : Distance
 
     void Start()
     {
-        gameObject.GetComponent<PhotonView>().RPC("SetItem", RpcTarget.All, Random.Range(0, 3));
+        setItemNum = Random.Range(0, 3);
+        
         switch (numItem)
         {
             case 0:
@@ -39,7 +40,6 @@ public class Item : Distance
         }
     }
 
-
     void PickingUp()
     {
         switch (itemsPlayer)
@@ -47,6 +47,7 @@ public class Item : Distance
             case ItemsPlayer.Bat:
                 if (isClose == true)
                 {
+                    
                     gameObject.GetComponent<PhotonView>().RPC("Deactivate", RpcTarget.All);
                     BatNotify.Invoke();
                     HaveTheItem.Invoke();
@@ -73,6 +74,11 @@ public class Item : Distance
                 break;
         }
 
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        gameObject.GetComponent<PhotonView>().RPC("SetItem", RpcTarget.All, setItemNum);
     }
     [PunRPC]
     public void SetItem(int _index)

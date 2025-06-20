@@ -24,8 +24,8 @@ public class GameStart : MonoBehaviour
             startCanvas.SetActive(true);
             if (Input.GetKey(KeyCode.E))
             {
-                gameObject.GetComponent<PhotonView>().RPC("TheGameStart", RpcTarget.All);
-                gameObject.GetComponent<PhotonView>().RPC("DeactivateDoor", RpcTarget.All);
+                gameObject.GetComponent<PhotonView>().RPC("TheGameStart", RpcTarget.AllBuffered);
+                gameObject.GetComponent<PhotonView>().RPC("DeactivateDoor", RpcTarget.AllBuffered);
                 isInGame = true;
             }
         }

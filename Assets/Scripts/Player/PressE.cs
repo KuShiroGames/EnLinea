@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,8 @@ public class PressE : MonoBehaviour
 
     public delegate void PressENotify();
     public static event PressENotify TaskNoty, PickUpNotify, NothingNoty;
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -25,9 +28,10 @@ public class PressE : MonoBehaviour
             if (Input.GetKey(KeyCode.E))
             {
                 time += Time.deltaTime;
-                if (time >= totalTime )
+                if (time >= totalTime)
                 {
                     TaskNoty.Invoke();
+                    isCollidingTask = false;
                     
                 }
             }

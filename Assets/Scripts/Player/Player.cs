@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
     void PressEDeactivate()
     {
         pressE.SetActive(false);
+        
     }
     void PressEDeactivateItem()
     {
@@ -122,7 +123,14 @@ public class Player : MonoBehaviour
         {
             pressE.SetActive(true);
         }
-        if (other.gameObject.CompareTag("Bat") || other.gameObject.CompareTag("bullet") && isKnockout == false)
+        if (other.gameObject.CompareTag("Bat") && isKnockout == false)
+        {
+            gameObject.GetComponent<PhotonView>().RPC("IsKnockOut", RpcTarget.All, true);
+        }
+    }
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("bullet") && isKnockout == false)
         {
             gameObject.GetComponent<PhotonView>().RPC("IsKnockOut", RpcTarget.All, true);
         }
